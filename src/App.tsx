@@ -1,7 +1,8 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useCallback } from 'react';
 import './App.css';
 import { MockData } from './const/mock';
 import { getMockData, getPage, setNextPage } from './utils/data';
+import useTotalPrice from './hook/useTotalPrice';
 
 function App() {
   const [list, setList] = useState<MockData[]>([]);
@@ -9,23 +10,31 @@ function App() {
   const [isLoading, setIsLoading] = useState(false);
   const observerRef = useRef<HTMLDivElement | null>(null);
 
-  const fetchData = async (page: number) => {
-    try {
-      setIsLoading(true);
-      const { datas, isEnd } = await getMockData(page);
-      setList((prevList) => [...prevList, ...datas]);
+  const { totalPrice, updateTotalPrice } = useTotalPrice();
 
-      if (isEnd) {
-        setIsLastPage(true);
-      } else {
-        setNextPage();
+  const fetchData = useCallback(
+    async (page: number) => {
+      try {
+        setIsLoading(true);
+
+        const { datas, isEnd } = await getMockData(page);
+        setList((prevList) => [...prevList, ...datas]);
+
+        updateTotalPrice(datas);
+
+        if (isEnd) {
+          setIsLastPage(true);
+        } else {
+          setNextPage();
+        }
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      } finally {
+        setIsLoading(false);
       }
-    } catch (error) {
-      console.error('Error fetching data:', error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
+    },
+    [updateTotalPrice]
+  );
 
   useEffect(() => {
     if (isLoading || isLastPage) return;
@@ -35,30 +44,27 @@ function App() {
         if (entries[0].isIntersecting) {
           const page = getPage();
           fetchData(page);
-          setNextPage();
         }
       },
-      { threshold: 1.0 } // 100% 화면에 들어왔을 때 트리거
+      { threshold: 1.0 }
     );
+    const currentRef = observerRef.current;
 
-    if (observerRef.current) {
-      observer.observe(observerRef.current);
+    if (currentRef) {
+      observer.observe(currentRef);
     }
 
     return () => {
-      if (observerRef.current) {
-        observer.unobserve(observerRef.current);
+      if (currentRef) {
+        observer.unobserve(currentRef);
       }
     };
-  }, [isLoading, isLastPage]);
-
-  useEffect(() => {
-    fetchData(0);
-  }, []);
+  }, [isLoading, isLastPage, fetchData]);
 
   return (
     <main>
       <h1>상품 리스트</h1>
+      <div>{totalPrice}</div>
       {list.map(({ productId, productName, price, boughtDate }) => (
         <div key={productId}>
           <p>상품명 : {productName}</p>
