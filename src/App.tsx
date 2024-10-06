@@ -3,6 +3,9 @@ import './App.css';
 import { MockData } from './const/mock';
 import { getMockData, getPage, setNextPage } from './utils/data';
 import useTotalPrice from './hook/useTotalPrice';
+import Card from './components/Card';
+import Spinner from './components/Spinner';
+import Header from './components/Header';
 
 function App() {
   const [list, setList] = useState<MockData[]>([]);
@@ -62,21 +65,14 @@ function App() {
   }, [isLoading, isLastPage, fetchData]);
 
   return (
-    <main>
-      <h1>상품 리스트</h1>
-      <div>{totalPrice}</div>
-      {list.map(({ productId, productName, price, boughtDate }) => (
-        <div key={productId}>
-          <p>상품명 : {productName}</p>
-          <p>가격 : {price}</p>
-          <p>구매일 : {boughtDate}</p>
-        </div>
-      ))}
-      {isLoading && <div>로딩중...</div>}
+    <main className="wrapper">
+      <Header totalPrice={totalPrice} />
+      <Card list={list} />
+      {isLoading && <Spinner />}
       {!isLastPage ? (
-        <div ref={observerRef} style={{ height: '20px' }} />
+        <div ref={observerRef} className="observer" />
       ) : (
-        <div>마지막 페이지 입니다</div>
+        <div className="end">마지막 페이지 입니다</div>
       )}
     </main>
   );
