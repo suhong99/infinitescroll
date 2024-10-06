@@ -4,3 +4,96 @@
   padding: 2rem;
   text-align: center;
 }
+
+.wrapper {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.header {
+  position: sticky;
+  top: 0;
+  background-color: #fff;
+  z-index: 100;
+  padding: 4px 10px;
+  /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 아래쪽에만 그림자 추가 */
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1); /* 추가로 경계선도 추가 */
+}
+
+.product_list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.product_card {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s;
+}
+
+.product_card:hover {
+  transform: scale(1.02);
+}
+
+.product_name {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.product_price {
+  color: #009688;
+  margin: 8px 0;
+}
+
+.product_date {
+  color: #757575;
+  font-size: 14px;
+}
+
+.title {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.total_price {
+  font-size: 18px;
+  font-weight: bold;
+  color: #009688;
+  margin-bottom: 20px;
+  text-align: right;
+}
+
+.loading {
+  border: 6px solid rgba(0, 0, 0, 0.1);
+  border-top: 4px solid #009688;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
+  margin: 20px auto; /* 가운데 정렬 */
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+.observer {
+  height: 20px;
+}
+
+.end {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 16px;
+  color: #757575;
+}
