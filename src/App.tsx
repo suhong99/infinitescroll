@@ -1,5 +1,5 @@
 import './App.css';
-import useInfiniteScroll from './hooks/useIntersection';
+import useInfiniteScroll from './hooks/useInfiniteScroll';
 import useTotalPrice from './hooks/useTotalPrice';
 import useFetchData from './hooks/useFetchData';
 import Card from './components/Card';
