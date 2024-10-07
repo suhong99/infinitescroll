@@ -1,6 +1,6 @@
 import { MockData } from '../const/mock';
 
-const Card: React.FC<{ list: MockData[] }> = ({ list }) => {
+const CardList: React.FC<{ list: MockData[] }> = ({ list }) => {
   return (
     <section className="product_list">
       {list.map(({ productId, productName, price, boughtDate }) => (
@@ -16,4 +16,4 @@ const Card: React.FC<{ list: MockData[] }> = ({ list }) => {
   );
 };
 
-export default Card;
+export default CardList;

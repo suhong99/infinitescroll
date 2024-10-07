@@ -1,27 +1,15 @@
 import './App.css';
-import useInfiniteScroll from './hooks/useInfiniteScroll';
 import useTotalPrice from './hooks/useTotalPrice';
-import useFetchData from './hooks/useFetchData';
-import Card from './components/Card';
-import Spinner from './components/Spinner';
 import Header from './components/Header';
+import InfinityScroll from './components/InfinityScroll';
 
 function App() {
   const { totalPrice, updateTotalPrice } = useTotalPrice();
-  const { list, isLastPage, isLoading, fetchData } =
-    useFetchData(updateTotalPrice);
-  const observerRef = useInfiniteScroll(fetchData, isLoading, isLastPage);
 
   return (
     <main className="wrapper">
       <Header totalPrice={totalPrice} />
-      <Card list={list} />
-      {isLoading && <Spinner />}
-      {!isLastPage ? (
-        <div ref={observerRef} className="observer" />
-      ) : (
-        <div className="end">마지막 페이지 입니다</div>
-      )}
+      <InfinityScroll updateTotalPrice={updateTotalPrice} />
     </main>
   );
 }
