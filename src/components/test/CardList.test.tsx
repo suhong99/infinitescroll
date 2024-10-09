@@ -2,6 +2,7 @@ import { render, screen } from '@testing-library/react';
 import { describe, it, expect } from 'vitest';
 import CardList from '../CardList';
 import { MockData } from '../../const/mock';
+import '@testing-library/jest-dom/vitest';
 
 // 테스트에 사용할 mock 데이터
 const mockList: MockData[] = [
@@ -24,14 +25,14 @@ describe('CardList Component', () => {
     render(<CardList list={mockList} />);
 
     // Product 1 체크
-    expect(screen.getByText('Product 1')).toBeTruthy();
-    expect(screen.getByText('가격 : 10,000원')).toBeTruthy();
-    expect(screen.getByText('구매일 : 2023-10-01')).toBeTruthy();
+    expect(screen.getByText('Product 1')).toBeInTheDocument();
+    expect(screen.getByText('가격 : 10,000원')).toBeInTheDocument();
+    expect(screen.getByText('구매일 : 2023-10-01')).toBeInTheDocument();
 
     // Product 2 체크
-    expect(screen.getByText('Product 2')).toBeTruthy();
-    expect(screen.getByText('가격 : 20,000원')).toBeTruthy();
-    expect(screen.getByText('구매일 : 2023-10-02')).toBeTruthy();
+    expect(screen.getByText('Product 2')).toBeInTheDocument();
+    expect(screen.getByText('가격 : 20,000원')).toBeInTheDocument();
+    expect(screen.getByText('구매일 : 2023-10-02')).toBeInTheDocument();
   });
 
   it('renders correctly when the list is empty', () => {
