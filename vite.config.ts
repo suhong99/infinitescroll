@@ -8,7 +8,7 @@ export default defineConfig({
   test: {
     globals: true,
     environment: 'jsdom',
-    setupFiles: './src/setup.ts',
+    setupFiles: './src/test/setup.ts',
     coverage: {
       provider: 'v8', // or 'v8'
       exclude: [
@@ -17,7 +17,9 @@ export default defineConfig({
         'src/components/Spinner.tsx',
         'src/main.tsx',
         '**/*.test.tsx',
+        '**/*.test.ts',
         'src/vite-env.d.ts',
+        'src/test/**',
       ],
       include: ['src/**/*.tsx', 'src/**/*.ts'],
     },
