@@ -16,7 +16,7 @@ const InfinityScroll: React.FC<{
       <CardList list={list} />
       {isLoading && <Spinner />}
       {!isLastPage ? (
-        <div ref={observerRef} className="observer" />
+        <div ref={observerRef} className="observer" role="observer" />
       ) : (
         <div className="end">마지막 페이지 입니다</div>
       )}
